@@ -8,17 +8,23 @@ import java.sql.SQLException;
 import domain.model.Book;
 
 public class BookRepository extends BaseRepository {
-	String insertSql = "INSERT INTO book(name, author,dateOfReleased,publisher,pageCount) VALUES (?,?,?,?,?)";
-	String selectByIdSql = "SELECT * FROM book WHERE id=?";
+	private String insertSql = "INSERT INTO book(name, author,dateOfReleased,publisher,pageCount) VALUES (?,?,?,?,?)";
+	private String selectByIdSql = "SELECT * FROM book WHERE id=?";
+	private String deleteSql = "DELETE FROM book WHERE id=?";
+	private String getAllSql = "SELECT * FROM book";
 	
 	PreparedStatement insert;
 	PreparedStatement selectById;
+	PreparedStatement delete;
+	PreparedStatement getAll;
 	
 	public BookRepository(Connection connection) {
 		super(connection);
 		try {
 			insert = connection.prepareStatement(insertSql);
 			selectById = connection.prepareStatement(selectByIdSql);
+			delete = connection.prepareStatement(deleteSql);
+			getAll = connection.prepareStatement(getAllSql);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -60,6 +66,19 @@ public class BookRepository extends BaseRepository {
 		}
 	}
 
+	public void delete(int bookId)
+	{
+		try {
+			delete.setInt(1, bookId);
+			delete.executeQuery();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	
 	@Override
 	protected String createTableSql() {
 		return "" + "CREATE TABLE book("
