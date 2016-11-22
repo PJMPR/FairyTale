@@ -1,30 +1,121 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class BaseRepository {
+import dao.mappers.IMapResultSetIntoEntity;
+import domain.model.IHaveId;
 
-	private Connection connection;
+public abstract class BaseRepository<TEntity extends IHaveId> {
 
-
+	protected Connection connection;
+	protected PreparedStatement insert;
+	protected PreparedStatement selectById;
+	protected PreparedStatement update;
+	protected PreparedStatement delete;
+	protected PreparedStatement selectAll;
+	
+	protected IMapResultSetIntoEntity<TEntity> mapper;
 	public Connection getConnection() {
 		return connection;
 	}
 	
-	protected BaseRepository(Connection connection){
+	protected BaseRepository(Connection connection,IMapResultSetIntoEntity<TEntity> mapper){
 		this.connection = connection;
+		try
+		{
+		this.mapper = mapper;
 		createTableIfnotExists();
+		insert = connection.prepareStatement(insertSql());
+		selectById = connection.prepareStatement(selectByIdSql());
+		update = connection.prepareStatement(updateSql());
+		delete = connection.prepareStatement(deleteSql());
+		selectAll = connection.prepareStatement(selectAllSql());
+		}
+		catch(SQLException ex)
+		{
+			ex.printStackTrace();
+		}
 	}
-
 	
-	protected abstract String createTableSql();
-	protected abstract String tableName();
+	public List<TEntity> getAll() {
+		try {
+			ResultSet rs = selectAll.executeQuery();
+			List<TEntity> result = new ArrayList<TEntity>();
+			while (rs.next()) {
+				result.add(mapper.map(rs));
+			}
+			return result;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 	
+	public void add(TEntity entity) {
+		try {
+			setInsert(entity);
+			insert.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 	
-
+	public void update(TEntity entity) {
+		try {
+			setUpdate(entity);
+			update.setInt(1, entity.getId());
+			update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void delete(TEntity entity) {
+		try {
+			delete.setInt(1, entity.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public TEntity get(int id)
+	{
+		try{
+			selectById.setInt(1, id);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()) {
+				return mapper.map(rs);
+			}
+		}
+		catch(SQLException ex)
+		{
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	protected String selectByIdSql() {
+		return "SELECT * FROM "
+				+ tableName()
+				+ " WHERE id=?";
+	}
+    
+	protected String deleteSql() {
+		return "DELETE FROM "
+				+ tableName()
+				+ " WHERE id=?";
+	}
+	
+	protected String selectAllSql() {
+		return "SELECT * FROM "+tableName();
+	}
+	
 	private void createTableIfnotExists() {
 		try {
 			Statement createTable = this.connection.createStatement();
@@ -46,4 +137,11 @@ public abstract class BaseRepository {
 			e.printStackTrace();
 		}
 	}
+	
+	protected abstract String insertSql();
+	protected abstract String updateSql();
+	protected abstract String createTableSql();
+	protected abstract String tableName();
+	protected abstract void setUpdate(TEntity entity) throws SQLException;
+	protected abstract void setInsert(TEntity entity) throws SQLException;
 }

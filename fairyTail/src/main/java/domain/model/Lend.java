@@ -2,10 +2,9 @@ package domain.model;
 
 import java.util.Date;
 
-public class Lend {
+public class Lend implements IHaveId {
 
 	private int id;
-	private Librarian librarian;
 	private Book book;
 	private Reader reader;
 	private Date dateOfLend;
@@ -17,13 +16,7 @@ public class Lend {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	public Librarian getLibrarian() {
-		return librarian;
-	}
-	public void setLibrarian(Librarian librarian) {
-		this.librarian = librarian;
-	}
+
 	public Book getBook() {
 		return book;
 	}

@@ -2,7 +2,7 @@ package domain.model;
 
 import java.sql.Date;
 
-public class Book {
+public class Book implements IHaveId{
 
 	private int id;
 	private String name;

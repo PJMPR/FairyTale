@@ -1,83 +1,16 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.Book;
 
-public class BookRepository extends BaseRepository {
-	private String insertSql = "INSERT INTO book(name, author,dateOfReleased,publisher,pageCount) VALUES (?,?,?,?,?)";
-	private String selectByIdSql = "SELECT * FROM book WHERE id=?";
-	private String deleteSql = "DELETE FROM book WHERE id=?";
-	private String getAllSql = "SELECT * FROM book";
-	
-	PreparedStatement insert;
-	PreparedStatement selectById;
-	PreparedStatement delete;
-	PreparedStatement getAll;
-	
-	public BookRepository(Connection connection) {
-		super(connection);
-		try {
-			insert = connection.prepareStatement(insertSql);
-			selectById = connection.prepareStatement(selectByIdSql);
-			delete = connection.prepareStatement(deleteSql);
-			getAll = connection.prepareStatement(getAllSql);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public Book get(int bookId){
-		try{
-			selectById.setInt(1, bookId);
-			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
-				Book result = new Book();
-				result.setId(rs.getInt("id"));
-				result.setName(rs.getString("name"));
-				result.setAuthor(rs.getString("author"));
-				result.setDateOfReleased(rs.getDate("dateOfReleased"));
-				result.setPublisher(rs.getString("publisher"));
-				result.setPageCount(rs.getInt("pageCount"));
-				return result;
-			}
-		}
-		catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		return null;
+public class BookRepository extends BaseRepository<Book> {
+	public BookRepository(Connection connection,IMapResultSetIntoEntity<Book> mapper) {
+		super(connection, mapper);
 		
 	}
-	
-	public void add(Book book) {
-		try {
-			insert.setString(1, book.getName());
-			insert.setString(2, book.getAuthor());
-			insert.setDate(3, book.getDateOfReleased());
-			insert.setString(4, book.getPublisher());
-			insert.setInt(5, book.getPageCount());
-			insert.executeUpdate();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public void delete(int bookId)
-	{
-		try {
-			delete.setInt(1, bookId);
-			delete.executeQuery();
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
 	
 	@Override
 	protected String createTableSql() {
@@ -91,6 +24,36 @@ public class BookRepository extends BaseRepository {
 	@Override
 	protected String tableName() {
 		return "book";
+	}
+
+	@Override
+	protected String insertSql() {
+		return "INSERT INTO book(name, author,dateOfReleased,publisher,pageCount) VALUES (?,?,?,?,?)";
+	}
+
+	@Override
+	protected String updateSql() {
+		return "UPDATE book SET(name, author,dateOfReleased,publisher,pageCount)=(?,?,?,?,?) WHERE id=?";
+	}
+
+	@Override
+	protected void setUpdate(Book entity) throws SQLException {
+		update.setString(1, entity.getName());
+		update.setString(2, entity.getAuthor());
+		update.setDate(2, entity.getDateOfReleased());
+		update.setString(2, entity.getPublisher());
+		update.setInt(2, entity.getPageCount());
+		
+	}
+
+	@Override
+	protected void setInsert(Book entity) throws SQLException {
+		insert.setString(1, entity.getName());
+		insert.setString(2, entity.getAuthor());
+		insert.setDate(2, entity.getDateOfReleased());
+		insert.setString(2, entity.getPublisher());
+		insert.setInt(2, entity.getPageCount());
+		
 	}
 
 	

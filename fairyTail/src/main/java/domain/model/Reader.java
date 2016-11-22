@@ -1,27 +1,34 @@
 package domain.model;
 
-import java.util.ArrayList;
-public class Reader extends Person {
 
-	private ArrayList<Book> listOfBooks = new ArrayList<Book>();
+public class Reader implements IHaveId {
+
+	private int id;
 	private String phoneNumber;
 	private String email;
-	private String location;
-	private String street;
-	private String address;
+	private String firstName;
+	private String lastName;
+	private Location address;
 	
-	public ArrayList<Book> getListOfBooks() {
-		return listOfBooks;
-	}
-
-	public  void addBook(Book book)
-	{
-		listOfBooks.add(book);
+	public int getId() {
+		return id;
 	}
 	
-	public void returnBook(Book book)
-	{
-		listOfBooks.remove(book);
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	public String getPhoneNumber() {
@@ -40,29 +47,16 @@ public class Reader extends Person {
 		this.email = email;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getAddress() {
+	public Location getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Location address) {
 		this.address = address;
 	}
+	
+	
+	
 
 	
 
