@@ -5,12 +5,13 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.Lend;
 
 public class LendRepository extends BaseRepository<Lend>{
 
-	protected LendRepository(Connection connection, IMapResultSetIntoEntity<Lend> mapper) {
-		super(connection, mapper);
+	protected LendRepository(Connection connection, IMapResultSetIntoEntity<Lend> mapper,IUnitOfWork uow) {
+		super(connection, mapper,uow);
 		
 	}
 

@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.Location;
 
 public class LocationRepository extends BaseRepository<Location>{
 
-	protected LocationRepository(Connection connection, IMapResultSetIntoEntity<Location> mapper) {
-		super(connection, mapper);
+	protected LocationRepository(Connection connection, IMapResultSetIntoEntity<Location> mapper,IUnitOfWork uow) {
+		super(connection, mapper,uow);
 
 	}
 

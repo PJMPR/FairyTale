@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.Reader;
 
 public class ReaderRepository extends BaseRepository<Reader> {
 
-	public ReaderRepository(Connection connection, IMapResultSetIntoEntity<Reader> mapper) {
-		super(connection,mapper);
+	public ReaderRepository(Connection connection, IMapResultSetIntoEntity<Reader> mapper,IUnitOfWork uow) {
+		super(connection,mapper,uow);
 	}
 
 	@Override

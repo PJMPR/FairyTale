@@ -2,13 +2,21 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IBookRepository;
+import dao.uow.Entity;
+import dao.uow.IUnitOfWork;
 import domain.model.Book;
+import domain.model.Category;
 
-public class BookRepository extends BaseRepository<Book> {
-	public BookRepository(Connection connection,IMapResultSetIntoEntity<Book> mapper) {
-		super(connection, mapper);
+public class BookRepository extends BaseRepository<Book> implements IBookRepository{
+	
+	
+	
+	public BookRepository(Connection connection,IMapResultSetIntoEntity<Book> mapper, IUnitOfWork uow) {
+		super(connection, mapper,uow);
 		
 	}
 	
@@ -56,6 +64,13 @@ public class BookRepository extends BaseRepository<Book> {
 		
 	}
 
-	
-	
+	public List<Book> author(String author) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Book> category(Category category) {
+		// TODO Auto-generated method stub
+		return null;
+	}	
 }

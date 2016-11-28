@@ -9,9 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IRepository;
+import dao.uow.Entity;
+import dao.uow.IUnitOfWork;
+import dao.uow.IUnitOfWorkRepository;
 import domain.model.IHaveId;
 
-public abstract class BaseRepository<TEntity extends IHaveId> {
+public abstract class BaseRepository<TEntity extends IHaveId> implements 
+ IRepository<TEntity>, IUnitOfWorkRepository{
 
 	protected Connection connection;
 	protected PreparedStatement insert;
@@ -19,14 +24,16 @@ public abstract class BaseRepository<TEntity extends IHaveId> {
 	protected PreparedStatement update;
 	protected PreparedStatement delete;
 	protected PreparedStatement selectAll;
-	
+	protected IUnitOfWork uow;
 	protected IMapResultSetIntoEntity<TEntity> mapper;
 	public Connection getConnection() {
 		return connection;
 	}
 	
-	protected BaseRepository(Connection connection,IMapResultSetIntoEntity<TEntity> mapper){
+	protected BaseRepository(Connection connection,IMapResultSetIntoEntity<TEntity> mapper
+			,IUnitOfWork uow){
 		this.connection = connection;
+		this.uow = uow;
 		try
 		{
 		this.mapper = mapper;
@@ -58,31 +65,21 @@ public abstract class BaseRepository<TEntity extends IHaveId> {
 	}
 	
 	public void add(TEntity entity) {
-		try {
-			setInsert(entity);
-			insert.executeUpdate();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
+		Entity ent = new Entity(this);
+		ent.setEntity(entity);
+		uow.markAsNew(ent);
 	}
 	
 	public void update(TEntity entity) {
-		try {
-			setUpdate(entity);
-			update.setInt(1, entity.getId());
-			update.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Entity ent = new Entity(this);
+		ent.setEntity(entity);
+		uow.markAsChanged(ent);
 	}
 	
 	public void delete(TEntity entity) {
-		try {
-			delete.setInt(1, entity.getId());
-			delete.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Entity ent = new Entity(this);
+		ent.setEntity(entity);
+		uow.markAsDeleted(ent);
 	}
 	
 	public TEntity get(int id)
@@ -99,6 +96,34 @@ public abstract class BaseRepository<TEntity extends IHaveId> {
 			ex.printStackTrace();
 		}
 		return null;
+	}
+	public void persistUpdate(Entity entity) {
+		try {
+			TEntity ent = (TEntity) entity.getEntity();
+			setUpdate(ent);
+			update.setInt(3, ent.getId());
+			update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void persistAdd(Entity entity) {
+		try {
+			setInsert((TEntity) entity.getEntity());
+			insert.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public void persistDelete(Entity entity) {
+		try {
+			delete.setInt(1, ((TEntity) entity.getEntity()).getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	protected String selectByIdSql() {
 		return "SELECT * FROM "

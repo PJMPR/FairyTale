@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.EnumDictionary;
 
 public class EnumDictionaryRepository extends BaseRepository<EnumDictionary> {
 
-	public EnumDictionaryRepository(Connection connection, IMapResultSetIntoEntity<EnumDictionary> mapper) {
-		super(connection, mapper);
+	public EnumDictionaryRepository(Connection connection, IMapResultSetIntoEntity<EnumDictionary> mapper,IUnitOfWork uow) {
+		super(connection, mapper,uow);
 	}
 
 	@Override
