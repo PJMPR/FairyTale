@@ -1,7 +1,10 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
@@ -11,8 +14,18 @@ import domain.model.Location;
 
 public class LocationRepository extends BaseRepository<Location> implements ILocationRepository{
 
+	private PreparedStatement getCity;
+	private PreparedStatement getStreet;
+	
 	protected LocationRepository(Connection connection, IMapResultSetIntoEntity<Location> mapper,IUnitOfWork uow) {
 		super(connection, mapper,uow);
+		try{
+			getCity = connection.prepareStatement(getCitySql());
+			getStreet = connection.prepareStatement(getStreetSql());
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
 
 	}
 
@@ -34,6 +47,14 @@ public class LocationRepository extends BaseRepository<Location> implements ILoc
 				+")";
 	}
 
+	protected String getCitySql()
+	{
+		return "SELECT * FROM location WHERE city=?";
+	}
+	protected String getStreetSql()
+	{
+		return "SELECT * FROM location WHERE street=?";
+	}
 	@Override
 	protected String tableName() {
 		// TODO Auto-generated method stub
@@ -56,13 +77,31 @@ public class LocationRepository extends BaseRepository<Location> implements ILoc
 	}
 
 	public List<Location> fromCity(String city) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Location> result = new ArrayList<Location>();
+		try {
+			getCity.setString(1, city);		
+			ResultSet rs = getCity.executeQuery();
+			while (rs.next()) {
+				result.add(mapper.map(rs));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return result;
 	}
 
 	public List<Location> fromStreet(String street) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Location> result = new ArrayList<Location>();
+		try {
+			getStreet.setString(1, street);	
+			ResultSet rs = getStreet.executeQuery();
+			while (rs.next()) {
+				result.add(mapper.map(rs));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return result;
 	}
 
 }

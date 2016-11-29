@@ -80,7 +80,10 @@ public class ReaderRepository extends BaseRepository<Reader> implements IReaderR
 		List<Reader> reader = new ArrayList<Reader>();
 		try{
 			getAddress.setObject(1, address);
-			ResultSet resultSet = getAddress.executeQuery();
+			ResultSet rs = getAddress.executeQuery();
+			while (rs.next()) {
+				reader.add(mapper.map(rs));
+			}
 		}
 		catch(SQLException e)
 		{

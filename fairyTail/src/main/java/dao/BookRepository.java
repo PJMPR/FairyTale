@@ -9,10 +9,9 @@ import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
 import dao.repositories.IBookRepository;
-import dao.uow.Entity;
 import dao.uow.IUnitOfWork;
 import domain.model.Book;
-import domain.model.Category;
+
 
 public class BookRepository extends BaseRepository<Book> implements IBookRepository{
 	

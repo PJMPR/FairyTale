@@ -3,7 +3,6 @@ package dao.repositories;
 import java.util.List;
 
 import domain.model.Book;
-import domain.model.Category;
 
 public interface IBookRepository extends IRepository<Book> {
 
