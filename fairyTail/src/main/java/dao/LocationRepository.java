@@ -2,12 +2,14 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.ILocationRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.Location;
 
-public class LocationRepository extends BaseRepository<Location>{
+public class LocationRepository extends BaseRepository<Location> implements ILocationRepository{
 
 	protected LocationRepository(Connection connection, IMapResultSetIntoEntity<Location> mapper,IUnitOfWork uow) {
 		super(connection, mapper,uow);
@@ -51,6 +53,16 @@ public class LocationRepository extends BaseRepository<Location>{
 		insert.setString(1, entity.getCity());
 		insert.setString(2, entity.getStreet());
 		
+	}
+
+	public List<Location> fromCity(String city) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Location> fromStreet(String street) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

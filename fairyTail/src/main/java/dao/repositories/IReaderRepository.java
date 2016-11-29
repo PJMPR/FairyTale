@@ -7,6 +7,6 @@ import domain.model.Reader;
 
 public interface IReaderRepository  extends IRepository<Reader>{
 
-	public List<Reader> fromAddress (Location address);
+ List<Reader> fromAddress (Location address);
 	
 }

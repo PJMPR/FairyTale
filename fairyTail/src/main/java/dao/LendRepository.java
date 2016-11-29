@@ -3,12 +3,16 @@ package dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.ILendRepository;
 import dao.uow.IUnitOfWork;
+import domain.model.Book;
 import domain.model.Lend;
+import domain.model.Reader;
 
-public class LendRepository extends BaseRepository<Lend>{
+public class LendRepository extends BaseRepository<Lend> implements ILendRepository{
 
 	protected LendRepository(Connection connection, IMapResultSetIntoEntity<Lend> mapper,IUnitOfWork uow) {
 		super(connection, mapper,uow);
@@ -53,6 +57,16 @@ public class LendRepository extends BaseRepository<Lend>{
          insert.setDate(3, (Date) entity.getDateOfLend());
          insert.setDate(4, (Date)entity.getDateOfRegive());
 		
+	}
+
+	public List<Lend> fromReader(Reader reader) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Lend> fromBook(Book book) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

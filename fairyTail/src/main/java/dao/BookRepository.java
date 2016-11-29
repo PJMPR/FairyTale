@@ -1,7 +1,10 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
@@ -13,10 +16,18 @@ import domain.model.Category;
 
 public class BookRepository extends BaseRepository<Book> implements IBookRepository{
 	
-	
+	private PreparedStatement getAuthor;
+	private PreparedStatement getName;
 	
 	public BookRepository(Connection connection,IMapResultSetIntoEntity<Book> mapper, IUnitOfWork uow) {
 		super(connection, mapper,uow);
+		try{
+			getAuthor = connection.prepareStatement(getAuthorSql());
+			getName = connection.prepareStatement(getNameSql());
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -43,6 +54,16 @@ public class BookRepository extends BaseRepository<Book> implements IBookReposit
 	protected String updateSql() {
 		return "UPDATE book SET(name, author,dateOfReleased,publisher,pageCount)=(?,?,?,?,?) WHERE id=?";
 	}
+	
+	protected String getAuthorSql()
+	{
+		return "SELECT * FROM book WHERE author = ?";
+	}
+	
+	protected String getNameSql()
+	{
+		return "SELECT * FROM book WHERE name = ?";
+	}
 
 	@Override
 	protected void setUpdate(Book entity) throws SQLException {
@@ -65,12 +86,35 @@ public class BookRepository extends BaseRepository<Book> implements IBookReposit
 	}
 
 	public List<Book> author(String author) {
-		// TODO Auto-generated method stub
-		return null;
+	 List<Book> book = new ArrayList<Book>();
+	 try{
+		 getAuthor.setString(1,author);
+         ResultSet resultSet = getAuthor.executeQuery();
+         while(resultSet.next()){
+             book.add(mapper.map(resultSet));
+	 }
+	 }
+	 catch (SQLException e)
+	 {
+		 e.printStackTrace();
+		 
+	 }
+	 return book;
 	}
 
-	public List<Book> category(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> withName(String name) {
+		List<Book> book = new ArrayList<Book>();
+		try{
+			getName.setString(1, name);
+			ResultSet resultSet = getName.executeQuery();
+			while(resultSet.next())
+			{
+				book.add(mapper.map(resultSet));
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+ 		return null;
 	}	
 }

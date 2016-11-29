@@ -9,7 +9,7 @@ public interface IBookRepository extends IRepository<Book> {
 
 	public List<Book> author (String author);
 	
-	public List<Book> category (Category category);
+	public List<Book> withName (String name);
 	
 	
 }

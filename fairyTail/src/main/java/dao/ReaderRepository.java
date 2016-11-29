@@ -1,16 +1,31 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IReaderRepository;
 import dao.uow.IUnitOfWork;
+import domain.model.Location;
 import domain.model.Reader;
 
-public class ReaderRepository extends BaseRepository<Reader> {
+public class ReaderRepository extends BaseRepository<Reader> implements IReaderRepository{
 
+	
+	private PreparedStatement getAddress;
 	public ReaderRepository(Connection connection, IMapResultSetIntoEntity<Reader> mapper,IUnitOfWork uow) {
 		super(connection,mapper,uow);
+		try{
+			getAddress = connection.prepareStatement(getAddressSql());
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -34,6 +49,11 @@ public class ReaderRepository extends BaseRepository<Reader> {
 	protected String updateSql() {
 		return "UPDATE reader SET (firstName, lastName,phoneNumber,email,ADDRESS_ID)=(?,?,?,?,?) WHERE id=?";
 	}
+	
+	protected String getAddressSql()
+	{
+		return "SELECT * FROM reader WHERE ADDRESS_ID=?";
+	}
 
 	@Override
 	protected void setUpdate(Reader entity) throws SQLException {
@@ -53,5 +73,19 @@ public class ReaderRepository extends BaseRepository<Reader> {
 		insert.setString(4, entity.getEmail());
 		insert.setObject(5, entity.getAddress());
 		
+	}
+	
+	
+	public List<Reader> fromAddress(Location address) {
+		List<Reader> reader = new ArrayList<Reader>();
+		try{
+			getAddress.setObject(1, address);
+			ResultSet resultSet = getAddress.executeQuery();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return reader;
 	}
 }

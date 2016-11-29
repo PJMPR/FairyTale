@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IEnumDictionaryRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.EnumDictionary;
 
-public class EnumDictionaryRepository extends BaseRepository<EnumDictionary> {
+public class EnumDictionaryRepository extends BaseRepository<EnumDictionary> implements IEnumDictionaryRepository {
 
 	public EnumDictionaryRepository(Connection connection, IMapResultSetIntoEntity<EnumDictionary> mapper,IUnitOfWork uow) {
 		super(connection, mapper,uow);
