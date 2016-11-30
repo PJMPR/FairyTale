@@ -7,4 +7,5 @@ public interface IRepositoryCatalog {
 	public IReaderRepository Reader();
 	public ILocationRepository Location();
 	public ILendRepository Lend();
+	public void save();
 }

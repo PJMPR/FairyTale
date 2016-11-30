@@ -10,6 +10,7 @@ public class Reader implements IHaveId {
 	private String lastName;
 	private Location address;
 	
+	
 	public int getId() {
 		return id;
 	}
