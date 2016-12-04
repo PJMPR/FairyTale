@@ -9,6 +9,7 @@ import dao.repositories.IRepositoryCatalog;
 import dao.uow.IUnitOfWork;
 import dao.uow.UnitOfWork;
 import domain.model.Book;
+import domain.model.Category;
 import domain.model.Lend;
 import domain.model.Location;
 import domain.model.Reader;
@@ -35,6 +36,7 @@ public class App
     	Book book = new Book();
     	book.setAuthor("Tadeusz");
     	book.setDateOfReleased(null);
+    	book.setCategory(Category.fantasy);
     	book.setName("Pan Tadeusz");
     	book.setPageCount(234);
     	book.setPublisher("PWN");
@@ -51,7 +53,7 @@ public class App
     	Connection connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
 		IUnitOfWork uow = new UnitOfWork(connection);
 		IRepositoryCatalog catalog = new RepositoryCatalog(connection, uow);
-		//catalog.Location().add(location);
+		catalog.Location().add(location);
 		catalog.Reader().add(reader);
 		catalog.Book().add(book);
 	

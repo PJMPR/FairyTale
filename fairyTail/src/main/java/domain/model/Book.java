@@ -7,6 +7,7 @@ public class Book implements IHaveId{
 	private int id;
 	private String name;
 	private String author;
+	private Category category;
 	private Date dateOfReleased;
 	private String publisher;
 	private int pageCount;
@@ -28,6 +29,13 @@ public class Book implements IHaveId{
 	}
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	public Date getDateOfReleased() {
 		return dateOfReleased;

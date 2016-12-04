@@ -57,8 +57,8 @@ public class LocationRepository extends BaseRepository<Location> implements ILoc
 	}
 	@Override
 	protected String tableName() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "location";
 	}
 
 	@Override
