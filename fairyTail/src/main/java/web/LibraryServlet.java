@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.RepositoryCatalog;
 import dao.repositories.IRepositoryCatalog;
@@ -26,29 +27,17 @@ import domain.model.Category;
 @WebServlet("/LibraryServlet")
 public class LibraryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
-    public LibraryServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	
+      
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Book> books = new ArrayList<Book>();
-		try
-		{
-		Connection connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
-		IUnitOfWork uow = new UnitOfWork(connection);
-		IRepositoryCatalog catalog = new RepositoryCatalog(connection,uow);
-		
-		books = catalog.Book().getAll();
-		req.setAttribute("books", books);
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
+	
+	List<Book> borrowList = new ArrayList<Book>();
+	borrowList = (List<Book>) req.getAttribute("book");
+	
+	HttpSession session = req.getSession();
+	
+	session.setAttribute("book", borrowList);
+	resp.sendRedirect("/setTheLend.jsp");
+	
 	}
 
 	

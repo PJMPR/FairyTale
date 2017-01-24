@@ -1,3 +1,7 @@
+<%@page import="dao.repositories.IRepositoryCatalog"%>
+<%@page import="dao.repositories.IRepository"%>
+<%@page import="dao.uow.IUnitOfWork"%>
+<%@page import="dao.uow.UnitOfWork"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import="java.sql.*,java.util.*,java.text.*,java.text.SimpleDateFormat" %>
@@ -11,32 +15,29 @@
 <title>Insert title here</title>
 </head>
 <body>
-   <form  enctype="text/plain">
-                <div>
+   <form  action="LibraryServlet" method="get">
+                
                     <p>Wybierz książkę</p>
                     </br>
-                    <select name="books">
+              
                         <%
                         try {
-                           RepositoryCatalog rp = new RepositoryCatalog(App.CONNECTION_STRING);
-                           List<Book> books = 
+                        	Connection connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+                    		IUnitOfWork uow = new UnitOfWork(connection);
+                    		IRepositoryCatalog catalog = new RepositoryCatalog(connection, uow);
+                           List<Book> books = catalog.Book().getAll(); 
                            for(Book book: books){
-                        %><ul>
-  							 <li> <%book.getId();%></li>
-							  <li><%book.getName();%></li>
- 							 <li><%book.getAuthor();%></li>
- 							 <li> <%book.getCategory();%></li>
-							  <li><%book.getPublisher();%></li>
- 							 <li><%book.getPageCount();%></li>
-						</ul>
+                        %>
+                 
+                        <input type="checkbox" name="book" value="<%book.getId();%>"><%=book.getName()%>
+                        
                         <%
                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         %>
-
-                    </select> </br>
-                    Podaj wartosc</br>
+                  
+                    </form>
 </body>
 </html>
