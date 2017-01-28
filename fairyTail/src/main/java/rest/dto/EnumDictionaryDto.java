@@ -1,20 +1,10 @@
-package domain.model;
+package rest.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-@Entity
-@NamedQueries({
-	@NamedQuery(name = "enumDictionary.all", query = "SELECT e FROM EnumDictionary e"),
-	@NamedQuery(name = "enumDictionary.enumerationName", query = "SELECT e FROM EnumDictionary e where e.enumerationName=:name")
-	
-})
-public class EnumDictionary implements IHaveId {
+public class EnumDictionaryDto {
 
-	
 	private int id;
 	private int intKey;
 	private String stringKey;

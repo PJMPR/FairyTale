@@ -1,47 +1,19 @@
-package domain.model;
+package rest.dto;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 @XmlRootElement
-@Entity
-@NamedQueries(
-		{
-			@NamedQuery(name= "book.all", query=" SELECT b FROM Book b")
-		})
-public class Book implements IHaveId{
-
+public class BookDto {
 	
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 	private String author;
-	private Category category;
 	private Date dateOfReleased;
 	private String publisher;
 	private int pageCount;
-	
-	@OneToMany
-	private List<Book> books = new ArrayList<Book>();
-	
-	public List<Book> getBooks() {
-		return books;
-	}
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
 	
 	public int getId() {
 		return id;
@@ -60,13 +32,6 @@ public class Book implements IHaveId{
 	}
 	public void setAuthor(String author) {
 		this.author = author;
-	}
-	
-	public Category getCategory() {
-		return category;
-	}
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 	public Date getDateOfReleased() {
 		return dateOfReleased;

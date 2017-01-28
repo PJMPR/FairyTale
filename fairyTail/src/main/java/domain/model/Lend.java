@@ -6,17 +6,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
+@NamedQueries(
+		{
+			@NamedQuery(name= "reader.all", query=" SELECT r FROM Reader r")
+		})
 public class Lend implements IHaveId {
 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@OneToOne
 	private Book book;
+	@OneToOne
 	private Reader reader;
 	private Date dateOfLend;
 	private Date dateOfRegive;
