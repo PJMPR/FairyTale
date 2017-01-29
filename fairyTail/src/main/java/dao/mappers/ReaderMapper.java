@@ -16,7 +16,6 @@ public class ReaderMapper implements IMapResultSetIntoEntity<Reader>{
 		reader.setLastName(rs.getString("lastName"));
 		reader.setPhoneNumber(rs.getString("phoneNumber"));
 		reader.setEmail(rs.getString("email"));
-		reader.setAddress((Location) rs.getObject("ADRESS_ID"));
 		return reader;
 	}
 

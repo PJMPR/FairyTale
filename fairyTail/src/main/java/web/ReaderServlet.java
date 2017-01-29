@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import domain.model.Reader;
 
 
-@WebServlet("/ReaderServlet")
+@WebServlet("/readerServlet")
 public class ReaderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

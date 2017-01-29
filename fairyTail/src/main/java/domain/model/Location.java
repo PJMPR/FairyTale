@@ -1,18 +1,22 @@
 package domain.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
 @NamedQueries(
 		{
-			@NamedQuery(name= "reader.all", query=" SELECT r FROM Reader r")
+			@NamedQuery(name= "location.all", query=" SELECT l FROM Location l")
 		})
 public class Location implements IHaveId{
 	
@@ -23,7 +27,17 @@ public class Location implements IHaveId{
 	private String city;
 	private String street;
 	
+	private List<Reader> readers = new ArrayList<Reader>();
 	
+	@OneToMany(mappedBy="reader")
+	public List<Reader> getReaders() {
+		return readers;
+	}
+
+	public void setReaders(List<Reader> readers) {
+		this.readers = readers;
+	}
+
 	public int getId() {
 		return id;
 	}

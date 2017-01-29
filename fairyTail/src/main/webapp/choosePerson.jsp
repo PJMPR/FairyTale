@@ -8,7 +8,7 @@
 <title>Type your name</title>
 </head>
 <body>
- <form action="ReaderServlet" method="get">
+ <form action="readerServlet" method="get">
  	<h1>Podaj dane czytelnika </h1>
     <p> Imie </p><br/>
     <input name="firstName" ><br/>

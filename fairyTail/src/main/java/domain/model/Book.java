@@ -33,7 +33,7 @@ public class Book implements IHaveId{
 	private String publisher;
 	private int pageCount;
 	
-	@OneToMany
+	
 	private List<Book> books = new ArrayList<Book>();
 	
 	public List<Book> getBooks() {

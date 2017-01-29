@@ -11,7 +11,7 @@ public class LocationMapper implements IMapResultSetIntoEntity<Location> {
 		Location location = new Location();
 		location.setCity(rs.getString("city"));
 		location.setStreet(rs.getString("street"));
-		return null;
+		return location;
 	}
 
 }

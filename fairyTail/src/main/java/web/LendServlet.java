@@ -1,32 +1,44 @@
 package web;
 
 import java.io.IOException;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import domain.model.Book;
+import domain.model.Lend;
+import domain.model.Reader;
 
 
-@WebServlet("/LendServlet")
+@WebServlet("/lendServlet")
 public class LendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
     public LendServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+   
     }
-
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		
+		Lend lend = new Lend();
+		lend.setDateOfLend((Date) request.getAttribute("dateOfLend"));
+		lend.setDateOfRegive((Date) request.getAttribute("dateOfRegive"));
+		lend.setReader((Reader) request.getAttribute("reader"));
+		lend.setBook((Book) request.getAttribute("book"));
+		
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("lend", lend);
 		doGet(request, response);
 	}
 

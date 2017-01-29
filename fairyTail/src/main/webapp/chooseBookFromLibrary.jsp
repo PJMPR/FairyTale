@@ -8,36 +8,39 @@
     <%@ page import="domain.model.Book" %>
     <%@page import="dao.RepositoryCatalog" %>
     <%@page import="domain.App" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-   <form  action="LibraryServlet" method="get">
+   <form  action="libraryServlet" method="get">
                 
-                    <p>Wybierz książkę</p>
-                    </br>
-              
-                        <%
-                        try {
-                        	Connection connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
-                    		IUnitOfWork uow = new UnitOfWork(connection);
-                    		IRepositoryCatalog catalog = new RepositoryCatalog(connection, uow);
-                           List<Book> books = catalog.Book().getAll(); 
-                           for(Book book: books){
-                        %>
-                 
-                        <input type="checkbox" name="book" value="<%book.getId();%>"><%=book.getName()%>
-                        
-                        <%
-                           }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        %>
+                    <p>Choose Book</p>
                   
+              
+                        
+              
+                          <%
+                          try {
+                         
+                         	Connection connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
+                     		IUnitOfWork uow = new UnitOfWork(connection);
+                     		IRepositoryCatalog catalog = new RepositoryCatalog(connection, uow);
+                            List<Book> books = catalog.Book().getAll(); 
+                             for(Book book: books){
+                         %>
+                  
+                         <input type="checkbox" name="book" value="<%book.getId();%>"><%=book.getName()%>
+                         
+                          <%
+                             }
+                          } catch (Exception e) {
+                              e.printStackTrace();
+                          }
+                          %>
+                          <input type="submit" value="Wypożycz">
                     </form>
 </body>
 </html>

@@ -24,18 +24,20 @@ import domain.model.Book;
 import domain.model.Category;
 
 
-@WebServlet("/LibraryServlet")
+@WebServlet("/libraryServlet")
 public class LibraryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
-	List<Book> borrowList = new ArrayList<Book>();
-	borrowList = (List<Book>) req.getAttribute("book");
+		
+	List<Book> listOfBook = new ArrayList<Book>();
+	
 	
 	HttpSession session = req.getSession();
+	session.setAttribute("books", listOfBook);
 	
-	session.setAttribute("book", borrowList);
+	
 	resp.sendRedirect("/setTheLend.jsp");
 	
 	}

@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @NamedQueries(
 		{
-			@NamedQuery(name= "reader.all", query=" SELECT r FROM Reader r")
+			@NamedQuery(name= "lend.all", query=" SELECT l FROM Lend l")
 		})
 public class Lend implements IHaveId {
 
@@ -27,6 +27,7 @@ public class Lend implements IHaveId {
 	private Book book;
 	@OneToOne
 	private Reader reader;
+	
 	private Date dateOfLend;
 	private Date dateOfRegive;
 	
