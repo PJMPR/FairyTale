@@ -32,7 +32,7 @@ public class ReaderServlet extends HttpServlet {
 		
 		session.setAttribute("reader", reader);
 		
-		response.sendRedirect("/chooseBookFromLibrary.jsp");
+		response.sendRedirect("chooseBookFromLibrary.jsp");
 	}
 
 	

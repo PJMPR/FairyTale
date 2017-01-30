@@ -3,7 +3,6 @@ package dao.mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import domain.model.Location;
 import domain.model.Reader;
 
 

@@ -22,7 +22,7 @@ public class App
 {
     public static void main( String[] args )
     {
-/*    	Location location = new Location();
+   	Location location = new Location();
     	location.setCity("Strzebielino");
     	location.setStreet("Dworcowa");
         
@@ -31,6 +31,7 @@ public class App
     	reader.setLastName("Dering");
     	reader.setEmail("pawel.dee@gmail.com");
     	reader.setPhoneNumber("667685791");
+    	reader.setAddress(location);
 
     	
     	Book book = new Book();
@@ -110,6 +111,6 @@ public class App
     		
     		e.printStackTrace();
     	}
-    	*/
+    	
     	}
 }

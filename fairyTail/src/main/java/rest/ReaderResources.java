@@ -52,8 +52,8 @@ public class ReaderResources {
 	    @Path("/{id}")
 	    @Produces(MediaType.APPLICATION_JSON)
 	    public Response get(@PathParam("id") int id) {
-	        Reader result = entityManager.createNamedQuery("person.id", Reader.class)
-	                .setParameter("id", id)
+	        Reader result = entityManager.createNamedQuery("reader.id", Reader.class)
+	                .setParameter("readerId", id)
 	                .getSingleResult();
 	        if (result == null) {
 	            return Response.status(404).build();

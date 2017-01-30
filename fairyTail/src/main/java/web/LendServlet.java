@@ -1,6 +1,8 @@
 package web;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -10,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import domain.model.Book;
+
 import domain.model.Lend;
-import domain.model.Reader;
+
 
 
 @WebServlet("/lendServlet")
@@ -31,15 +33,22 @@ public class LendServlet extends HttpServlet {
 		
 		
 		Lend lend = new Lend();
-		lend.setDateOfLend((Date) request.getAttribute("dateOfLend"));
-		lend.setDateOfRegive((Date) request.getAttribute("dateOfRegive"));
-		lend.setReader((Reader) request.getAttribute("reader"));
-		lend.setBook((Book) request.getAttribute("book"));
 		
 		HttpSession session = request.getSession();
 		
+		Date dateOfLend = new Date();
+		Date dateOfRegive = new Date();
+		try {
+			dateOfLend = new SimpleDateFormat("dd-MM-yyyy").parse((String) request.getAttribute("dateOfLend"));
+			dateOfRegive = new SimpleDateFormat("dd-MM-yyyy").parse((String) request.getAttribute("dateOfRegive"));	
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		lend.setDateOfLend(dateOfLend);
+		lend.setDateOfRegive(dateOfRegive);
 		session.setAttribute("lend", lend);
-		doGet(request, response);
+		response.sendRedirect("finalResult.jsp");
 	}
 
 }

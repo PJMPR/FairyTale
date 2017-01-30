@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Table;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,9 +16,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import domain.model.Location;
-import domain.model.Reader;
 
 @Path("/location")
+@Table(name="location")
 @Stateless
 public class LocationResources {
 
@@ -28,7 +29,7 @@ public class LocationResources {
 	  @Produces(MediaType.APPLICATION_JSON)
 	    public Response getAll(){
 	    	List<Location> result = new ArrayList<Location>();
-	    	for(Location r: entityManager.createNamedQuery("reader.all",Location.class).getResultList())
+	    	for(Location r: entityManager.createNamedQuery("location.all",Location.class).getResultList())
 	    	{
 	        	result.add(r);
 	        }

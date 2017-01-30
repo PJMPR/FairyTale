@@ -55,6 +55,7 @@ public class Lend implements IHaveId {
 	}
 	public void setDateOfLend(Date dateOfLend) {
 		this.dateOfLend = dateOfLend;
+		
 	}
 	public Date getDateOfRegive() {
 		return dateOfRegive;

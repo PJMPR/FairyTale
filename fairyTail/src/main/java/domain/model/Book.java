@@ -1,6 +1,7 @@
 package domain.model;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -34,15 +34,7 @@ public class Book implements IHaveId{
 	private int pageCount;
 	
 	
-	private List<Book> books = new ArrayList<Book>();
-	
-	public List<Book> getBooks() {
-		return books;
-	}
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
-	
+
 	public int getId() {
 		return id;
 	}
