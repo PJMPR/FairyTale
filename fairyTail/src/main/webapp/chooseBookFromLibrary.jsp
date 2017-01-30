@@ -18,10 +18,6 @@
    <form  action="libraryServlet" method="get">
                 
                     <p>Choose Book</p>
-                  
-              
-                        
-              
                           <%
                           try {
                          
@@ -29,7 +25,8 @@
                      		IUnitOfWork uow = new UnitOfWork(connection);
                      		IRepositoryCatalog catalog = new RepositoryCatalog(connection, uow);
                             List<Book> books = catalog.Book().getAll(); 
-                             for(Book book: books){
+                             for(Book book: books)
+                             {
                          %>
                   
                          <input type="checkbox" name="book" value="<%book.getId();%>"><%=book.getName()%>

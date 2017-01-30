@@ -9,13 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
+@Table(name="lend")
 @NamedQueries(
 		{
-			@NamedQuery(name= "lend.all", query=" SELECT l FROM Lend l")
+			@NamedQuery(name= "lend.all", query=" SELECT l FROM Lend l"),
+			@NamedQuery(name= "lend.id", query=" SELECT l FROM Lend l WHERE l.id=:id")
 		})
 public class Lend implements IHaveId {
 
@@ -28,7 +33,9 @@ public class Lend implements IHaveId {
 	@OneToOne
 	private Reader reader;
 	
+	@Temporal(TemporalType.DATE)
 	private Date dateOfLend;
+	@Temporal(TemporalType.DATE)
 	private Date dateOfRegive;
 	
 	public int getId() {

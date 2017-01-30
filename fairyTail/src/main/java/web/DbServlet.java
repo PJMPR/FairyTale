@@ -19,6 +19,7 @@ import dao.uow.IUnitOfWork;
 import dao.uow.UnitOfWork;
 import domain.model.Book;
 import domain.model.Lend;
+import domain.model.Location;
 import domain.model.Reader;
 
 
@@ -41,11 +42,14 @@ public class DbServlet extends HttpServlet {
 			IUnitOfWork uow = new UnitOfWork(connection);
 			IRepositoryCatalog catalog = new RepositoryCatalog(connection, uow);
 			HttpSession session = request.getSession();
+			Location location = (Location) session.getAttribute("location");
 			Reader reader = (Reader) session.getAttribute("reader");
 			Book book = (Book) session.getAttribute("book");
+			catalog.Location().add(location);
+			catalog.save();
 			catalog.Reader().add(reader);
 			catalog.Book().add(book);
-			catalog.save();
+			
 			Lend lend = new Lend();
 			lend.setBook(book);
 			lend.setDateOfLend((Date) session.getAttribute("dateOfLend"));
@@ -54,8 +58,8 @@ public class DbServlet extends HttpServlet {
 			catalog.Lend().add(lend);
 			catalog.save();
 			session.removeAttribute("location");
-			session.removeAttribute("book");
 			session.removeAttribute("reader");
+			session.removeAttribute("book");
 			session.removeAttribute("dateOfLend");
 			session.removeAttribute("dateOfRegive");
 			response.sendRedirect("index.html");

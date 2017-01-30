@@ -26,7 +26,7 @@ public class App
     	location.setCity("Strzebielino");
     	location.setStreet("Dworcowa");
         
-        Reader reader = new Reader();
+      /*  Reader reader = new Reader();
     	reader.setFirstName("Pawel");
     	reader.setLastName("Dering");
     	reader.setEmail("pawel.dee@gmail.com");
@@ -86,7 +86,7 @@ public class App
     	lend.setBook(book);
     	lend.setDateOfLend(null);
     	lend.setDateOfRegive(null);
-    	lend.setReader(reader);
+    	lend.setReader(reader);*/
     	try{
     
     
@@ -95,7 +95,7 @@ public class App
 		IUnitOfWork uow = new UnitOfWork(connection);
 		IRepositoryCatalog catalog = new RepositoryCatalog(connection, uow);
 		catalog.Location().add(location);
-		catalog.Reader().add(reader);
+		/*catalog.Reader().add(reader);
 		catalog.Book().add(book);
 		catalog.Book().add(book2);
 		catalog.Book().add(book3);
@@ -105,7 +105,7 @@ public class App
 		
 	
 		
-		catalog.Lend().add(lend);
+		catalog.Lend().add(lend);*/
 		catalog.save();
     	}catch(SQLException e){
     		

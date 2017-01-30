@@ -64,7 +64,7 @@ public class ReaderRepository extends BaseRepository<Reader> implements IReaderR
 		update.setString(2, entity.getLastName());
 		update.setString(3, entity.getPhoneNumber());
 		update.setString(4, entity.getEmail());
-		update.setInt(5, entity.getAddress().getId());
+		update.setInt(5, entity.getLocation().getId());
 		
 	}
 
@@ -74,7 +74,7 @@ public class ReaderRepository extends BaseRepository<Reader> implements IReaderR
 		insert.setString(2, entity.getLastName());
 		insert.setString(3, entity.getPhoneNumber());
 		insert.setString(4, entity.getEmail());
-		insert.setInt(5, entity.getAddress().getId());
+		insert.setInt(5, entity.getLocation().getId());
 		
 	}
 	

@@ -17,11 +17,17 @@
     <p> Email </p><br/>
     <input name="email"> <br/>
     <p> Numer Telefonu </p><br/>
-    <input type="number" name="phoneNumer"> <br/>
+    <input name="phoneNumer"> <br/>
+    
+    
+    
+    <h2> Miejsce Zamieszkania</h2>
+    <p> Imie </p><br/>
+    <input name="city" ><br/>
+    <p> Nazwisko </p><br/>
+    <input name="street"> <br/>
     
     <input type="submit" value="wyślij" >
-    
-    
  
  </form>
 </body>

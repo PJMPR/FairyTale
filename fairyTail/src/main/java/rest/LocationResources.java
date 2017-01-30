@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Table;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,7 +17,6 @@ import javax.ws.rs.core.Response;
 import domain.model.Location;
 
 @Path("/location")
-@Table(name="location")
 @Stateless
 public class LocationResources {
 

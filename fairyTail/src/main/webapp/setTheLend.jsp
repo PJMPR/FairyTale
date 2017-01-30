@@ -7,13 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="lendServlet"method="post">
+<form action="lendServlet"method="get">
 
 <h1>Ustaw date wypożyczenia</h1>
 <p>Data Wypożyczenia</p>
-<input type="date" value="dateOfLend">
+<input type="date" name="dateOfLend" value="dateOfLend">
 <p>Data oddania</p>
-<input type="date" value="dateOfRegive">
+<input type="date" name="dateOfRegive" value="dateOfRegive">
 <input type="submit" value="Wypożycz">
 </form>
 </body>

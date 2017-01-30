@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import domain.model.Book;
 import domain.model.Lend;
+import domain.model.Reader;
 
 
 
@@ -29,24 +30,28 @@ public class LendServlet extends HttpServlet {
 
 
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
 		Lend lend = new Lend();
 		
 		HttpSession session = request.getSession();
-		
-		Date dateOfLend = new Date();
-		Date dateOfRegive = new Date();
+		lend.setBook((Book) session.getAttribute("book"));
+		lend.setReader((Reader) session.getAttribute("reader"));
+		String dateOfLendStr = request.getParameter("dateOfLend");
+		String dateOfRegiveStr = request.getParameter("dateOfRegive");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
 		try {
-			dateOfLend = new SimpleDateFormat("dd-MM-yyyy").parse((String) request.getAttribute("dateOfLend"));
-			dateOfRegive = new SimpleDateFormat("dd-MM-yyyy").parse((String) request.getAttribute("dateOfRegive"));	
+			Date dateOfLend = sdf.parse(dateOfLendStr);
+			Date dateOfRegive = sdf.parse(dateOfRegiveStr);
+			lend.setDateOfLend(dateOfLend);
+			lend.setDateOfLend(dateOfRegive);
 		} catch (ParseException e) {
-			
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		lend.setDateOfLend(dateOfLend);
-		lend.setDateOfRegive(dateOfRegive);
+        
 		session.setAttribute("lend", lend);
 		response.sendRedirect("finalResult.jsp");
 	}

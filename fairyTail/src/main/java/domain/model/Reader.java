@@ -4,16 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
+@Table(name="reader")
 @NamedQueries(
 		{
-			@NamedQuery(name= "reader.all", query=" SELECT r FROM Reader r")
+			@NamedQuery(name= "reader.all", query=" SELECT r FROM Reader r"),
+			@NamedQuery(name= "reader.id", query=" SELECT r FROM Reader r WHERE r.id=:id")
 		})
 public class Reader implements IHaveId {
 
@@ -27,7 +31,8 @@ public class Reader implements IHaveId {
 	private String lastName;
 	
 	@ManyToOne
-	private Location address;
+	@JoinColumn(name="ADDRESS_ID")
+	private Location location;
 	
 	
 	public int getId() {
@@ -67,12 +72,12 @@ public class Reader implements IHaveId {
 		this.email = email;
 	}
 
-	public Location getAddress() {
-		return address;
+	public Location getLocation() {
+		return location;
 	}
 
-	public void setAddress(Location address) {
-		this.address = address;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 	
 	

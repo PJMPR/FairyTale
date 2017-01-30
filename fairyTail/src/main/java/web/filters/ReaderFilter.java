@@ -16,7 +16,7 @@ import domain.model.Reader;
 
 
 
-@WebFilter(urlPatterns = {"/chooseBookFromLibrary.jsp","/LibraryServlet","/final.jsp"})
+@WebFilter(urlPatterns = {"/chooseBookFromLibrary.jsp","/LibraryServlet","/finalResult.jsp"})
 public class ReaderFilter implements Filter {
 
    

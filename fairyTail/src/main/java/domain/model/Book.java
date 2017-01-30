@@ -1,23 +1,22 @@
 package domain.model;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
+@Table(name="book")
 @NamedQueries(
 		{
-			@NamedQuery(name= "book.all", query=" SELECT b FROM Book b")
+			@NamedQuery(name= "book.all", query=" SELECT b FROM Book b"),
+			@NamedQuery(name= "book.id", query=" SELECT b FROM Book b WHERE b.id=:id")
 		})
 public class Book implements IHaveId{
 
@@ -26,6 +25,7 @@ public class Book implements IHaveId{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String name;
 	private String author;
 	private Category category;
