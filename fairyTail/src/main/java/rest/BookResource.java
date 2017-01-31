@@ -16,8 +16,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
+
 
 import domain.model.Book;
 import rest.dto.BookDto;
@@ -27,7 +26,7 @@ import rest.dto.BookDto;
 @Stateless
 public class BookResource {
 
-	Mapper mapper = new DozerBeanMapper();
+
 	
 	 @PersistenceContext
 	 EntityManager entityManager;
@@ -35,14 +34,14 @@ public class BookResource {
 	 @GET
 	  @Produces(MediaType.APPLICATION_JSON)
 	    public Response getAll(){
-	    	List<BookDto> result = new ArrayList<BookDto>();
+	    	List<Book> result = new ArrayList<Book>();
 	    	for(Book b: entityManager.createNamedQuery("book.all",Book.class).getResultList())
 	    	{
-	        	result.add(mapper.map(b, BookDto.class));
+	        	result.add(b);
 	        }
 
 	       
-	        return Response.ok(new GenericEntity<List<BookDto>>(result){}).build();
+	        return Response.ok(new GenericEntity<List<Book>>(result){}).build();
 	    }
 	 
 	 @POST

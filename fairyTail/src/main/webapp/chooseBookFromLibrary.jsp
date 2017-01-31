@@ -29,7 +29,7 @@
                              {
                          %>
                   
-                         <input type="checkbox" name="book" value="<%book.getId();%>"><%=book.getName()%>
+                         <input type="checkbox" name="book" value="<%book.getClass();%>"><%book.getName();%>
                          
                           <%
                              }

@@ -24,7 +24,7 @@ public class LibraryServlet extends HttpServlet {
 
 		Book book = new Book();
 	
-		book = (Book) session.getAttribute("book");
+		//book = (Book)req.getParameter("book");
 	
 	
 	session.setAttribute("book", book);

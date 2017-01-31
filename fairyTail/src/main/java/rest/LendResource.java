@@ -15,8 +15,6 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 
 import domain.model.Book;
 import domain.model.Lend;
@@ -27,7 +25,6 @@ import rest.dto.LendDto;
 public class LendResource {
 
 	
-	Mapper mapper = new DozerBeanMapper();
 	
 	 @PersistenceContext
 	 EntityManager entityManager;
@@ -36,12 +33,12 @@ public class LendResource {
 	 @GET
 	  @Produces(MediaType.APPLICATION_JSON)
 	    public Response getAll(){
-	    	List<LendDto> result = new ArrayList<LendDto>();
+	    	List<Lend> result = new ArrayList<Lend>();
 	    	for(Lend l: entityManager.createNamedQuery("lend.all",Lend.class).getResultList())
 	    	{
-	        	result.add(mapper.map(l, LendDto.class));
+	        	result.add(l);
 	        }
-	        return Response.ok(new GenericEntity<List<LendDto>>(result){}).build();
+	        return Response.ok(new GenericEntity<List<Lend>>(result){}).build();
 	    }
 	 
 	 @GET
